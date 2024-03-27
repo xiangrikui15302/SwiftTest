@@ -171,19 +171,19 @@ func lengthOfLongestSubstring(_ s: String) -> Int {
     // 1. 首先定义一个字典和一个无重复字符的起始位置
     var dict = [Character:Int]()
     var startIndex = 0
-    var result = 0
+    var maxLen = 0
 
     // 2.遍历字符串，如果之前出现过，start指针就指向出现的index+1
-    for (idex,char) in s.enumerated() {
+    for (index,char) in s.enumerated() {
         if let preIndex = dict[char] {
             startIndex = preIndex+1
         }
-        dict[char] = idex
+        dict[char] = index
         // 3.记录当前index和startIndex之间的长度
-        result = max(result, idex-startIndex+1)
+        maxLen = max(maxLen, index-startIndex+1)
     }
     
-    return result
+    return maxLen
     
 }
 

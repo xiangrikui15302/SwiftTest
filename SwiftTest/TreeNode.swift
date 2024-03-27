@@ -22,35 +22,94 @@ public class TreeNode {
 var result = [Int]();
 // 1. 二叉树的中序遍历   左   父   右
 func inorderTraversal(_ root: TreeNode?)-> [Int] {
-    if let root = root {
-        _ = inorderTraversal(root.left)
-        result.append(root.val)
-        _ = inorderTraversal(root.right)
+    
+    // 迭代(用一个栈来控制左右顺序)
+    // 循环量越大，迭代的效率比递归的效率越高，因为递归需要频繁的调用函数和开辟栈空间
+    guard let root = root else {
+        return result
+    }
+    var stack = [root]
+    while let node = stack.popLast() {
+        
+        if let right = root.right {
+            stack.append(right)
+        }
+        result.append(node.val)
+
+        if let left = root.left {
+            stack.append(left)
+        }
     }
     return result
+    
+    // 递归
+//    if let root = root {
+//        _ = inorderTraversal(root.left)
+//        result.append(root.val)
+//        _ = inorderTraversal(root.right)
+//    }
+//    return result
 }
 
 // 2. 二叉树的前序遍历   父   左   右
 func preorderTraversal(_ root: TreeNode?)-> [Int] {
+    // 迭代(用一个栈来控制左右顺序)
     guard let root = root else {
         return result
     }
-    result.append(root.val)
-    _ = preorderTraversal(root.left)
-    _ = preorderTraversal(root.right)
+    
+    var stack = [root]
+    while let node = stack.popLast() {
+        
+        result.append(node.val)
+        if let right = root.right {
+            stack.append(right)
+        }
+        if let left = root.left {
+            stack.append(left)
+        }
+        
+    }
     return result
+    
+    // 递归
+//    guard let root = root else {
+//        return result
+//    }
+//    result.append(root.val)
+//    _ = preorderTraversal(root.left)
+//    _ = preorderTraversal(root.right)
+//    return result
 }
 
 //  二叉树的后序遍历     左   右   父
 func postorderTraversal(_ root: TreeNode?) -> [Int] {
-    
-    if let root = root {
-        _ = postorderTraversal(root.left)
-        _ = postorderTraversal(root.right)
-        result.append(root.val)
+    // 迭代(用一个栈来控制左右顺序)
+    guard let root = root else {
+        return result
     }
-    
+    var stack = [root]
+    while let node = stack.popLast() {
+        
+        if let right = root.right {
+            stack.append(right)
+        }
+        if let left = root.left {
+            stack.append(left)
+        }
+        result.append(node.val)
+    }
     return result
+    
+    
+    // 递归
+//    if let root = root {
+//        _ = postorderTraversal(root.left)
+//        _ = postorderTraversal(root.right)
+//        result.append(root.val)
+//    }
+//
+//    return result
 
 }
 
@@ -132,6 +191,22 @@ func maxDepth(_ root: TreeNode?) -> Int {
     guard let root = root else {
         return 0
     }
+    
+    // 迭代
+//    var leftDepth = 1
+//    while root.left != nil {
+//        leftDepth += 1
+//        root = root.left
+//    }
+//
+//    var rightDepth = 1
+//    while root.right != nil {
+//        rightDepth += 1
+//        root = root.right
+//    }
+//    return max(leftDepth,rightDepth)
+    
+    // 递归
     let leftHeight = maxDepth(root.left)
     let rightHeight = maxDepth(root.right)
     

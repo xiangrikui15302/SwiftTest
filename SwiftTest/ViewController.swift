@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         //        firstUniqChar("leetcode")
         
         //        lengthOfLongestSubstring("abcabcbb")
-                minSubArrayLen([1,4,4],4)
+                minSubArrayLen([2,3,1,2,4,5],8)
 //        getSecondMax([2,5,1,2,4,5]);
 //        findMedianSortedArrays([1,2],[3,4])
         

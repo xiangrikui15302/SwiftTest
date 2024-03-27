@@ -15,9 +15,10 @@ func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
     var dict:[Int:Int] = [:]
     var result:[Int] = []
     for i in 0..<nums.count {
-        num = target - nums[i]
+        var current = nums[i]
+        num = target - current
         if (dict[num] == nil) {
-            dict[nums[i]] = i
+            dict[current] = i
         } else {
             result.append(dict[num]!)
             result.append(i)
@@ -77,21 +78,19 @@ func maxSubArray(_ nums: [Int]) -> Int {
 
 // 5. 长度最小的子数组   滑动窗口
 // 给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的 连续 子数组，并返回其长度。如果不存在符合条件的子数组，返回 0。
-// s = 7, nums = [2,3,1,2,4,3]   [4,3] 所以返回2
+// s = 8, nums = [2,3,1,2,4,5]   [4,3] 所以返回2
 func minSubArrayLen(_ nums : [Int],_ target:Int) -> Int {
     var queue = [Int]()
+    // 滑动窗口中的所有的和
     var sum = 0
     var minCount = Int.max
     for num in nums {
-        sum += num
         queue.append(num)
+        sum += num
 
-        while sum > target {
-            sum -= queue.removeFirst()
-        }
-        if sum == target {
+        while sum >= target {
             minCount = min(minCount, queue.count)
-
+            sum -= queue.removeFirst()
         }
         
     }
@@ -175,7 +174,8 @@ func removeElement(_ arr:inout [Int], _ num:Int) -> Int {
     var slowIndex = 0
     for fastIndex in 0..<arr.count {
         if arr[fastIndex] != num {
-            arr[slowIndex] = arr[fastIndex]
+            // 如果需要输出这个数组就将这句加上
+//            arr[slowIndex] = arr[fastIndex]
             slowIndex += 1
         }
     }
@@ -255,7 +255,7 @@ func minNumberInRotateArray(_ arr:[Int]) -> Int {
         }
         
         if(high - low == 1) {
-            return arr[low]
+            return arr[high]
         }
     }
     return -1
@@ -463,10 +463,10 @@ func maxProfit(_ prices: [Int]) -> Int {
 func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
     if nums1.count == 0 && nums2.count == 0 {return 0.0}
     var resultArr = [Int]()
-    var count = nums1.count + nums2.count
+    let count = nums1.count + nums2.count
     var index1 = 0
     var index2 = 0
-    
+    let middle = count / 2
     for i in 0..<count {
         if index1 >= nums1.count {
             while index2 < nums2.count {
@@ -491,13 +491,16 @@ func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
             resultArr.append(nums2[index2])
             index2 += 1
         }
+        if i == middle {
+            break
+        }
     }
     
-    if(resultArr.count == 1) {
+    if(count == 1) {
         return Double(resultArr[0])
     }
-    var middle = resultArr.count / 2
-    if resultArr.count % 2 == 0 {
+    
+    if count % 2 == 0 {
         return Double(resultArr[middle] + resultArr[middle-1])/2.0
     } else {
         return Double(resultArr[middle])

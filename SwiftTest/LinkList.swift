@@ -40,6 +40,7 @@ func getMiddleNode(_ linkList: LinkList?) -> LinkList?{
 
 // 2.删除链表的倒数第k个
 func removeNthFromEnd(_ head: LinkList?, _ n: Int) -> LinkList? {
+    
     let tempHead = LinkList.init()
     tempHead.next = head
 

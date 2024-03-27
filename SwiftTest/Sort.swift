@@ -156,6 +156,7 @@ func shiftDown(_ nums:inout [Int],_ index:Int) {
 
 // 6.前K个高频单词
 func topKFrequent(_ words:[String], _ k:Int) -> [String] {
+    
     var result = [String]()
     var dict = [String:Int]()
     for word in words {
